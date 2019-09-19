@@ -1,0 +1,54 @@
+/*
+* @Author: lifangfang
+* @Date:   2019-03-21 19:02:07
+* @Last Modified by:   lifangfang
+* @Last Modified time: 2019-07-11 16:07:49
+*/
+.e-grid {
+    overflow: hidden;
+    position: relative;
+    border-top-width: 1px;
+    border-top-style: solid;
+    box-sizing: border-box;
+    border-left-width: 1px;
+    border-left-style: solid;
+    &.no-l-border {
+        border-left: none;
+    }
+    &.no-t-border {
+        border-top: none;
+    }
+    .e-grid-item {
+        position: relative;
+        float: left;
+        padding: 0.267rem;
+        box-sizing: border-box;
+        border-right-width: 1px;
+        border-right-style: solid;
+        border-bottom-width: 1px;
+        border-bottom-style: solid;
+        text-align: center;
+        &.no-r-border {
+            border-right: none;
+        }
+        &.no-b-border{
+            border-bottom: none;
+        }
+
+        &-icon {
+            margin: 0 auto 0.067rem;
+            img {
+                max-width: 0.933rem;
+                max-height: 0.933rem;
+            }
+        }
+        &-label {
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+    }
+}

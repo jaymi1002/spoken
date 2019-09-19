@@ -1,0 +1,19 @@
+/*
+* @Author: lifangfang
+* @Date:   2019-06-20 16:26:27
+* @Last Modified by:   lifangfang
+* @Last Modified time: 2019-08-23 11:19:02
+*/
+$bg:(
+	'primary-linner':linear-gradient(to left, #46c3ff, #69cdfd),
+	'primary':#46c3ff,
+	'progress-outer':#f1f5f8,
+	'green':#40bb8a,
+);
+
+@each $key,$var in $bg {
+	.bg-#{$key} {
+		background: $var
+	}
+
+}

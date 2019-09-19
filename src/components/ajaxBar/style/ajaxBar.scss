@@ -1,0 +1,46 @@
+/*
+* @Author: lifangfang
+* @Date:   2018-12-19 15:07:35
+* @Last Modified by:   lifangfang
+* @Last Modified time: 2019-07-03 18:03:18
+*/
+
+.e-ajax-bar {
+    position: fixed;
+    transition: transform 0.5s cubic-bezier(0, 0, 1, 1), opacity 0.5s linear;
+    height: 0.093rem;
+    z-index: 1;
+    &.no-transiton {
+        transition: none !important;
+    }
+    &.top {
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    &.bottom {
+        bottom: 0;
+        left: 0;
+        width: 100%;
+    }
+
+    &.left {
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0.093rem
+    }
+
+    &.right {
+        right: 0;
+        top: 0;
+        height: 100%;
+        width: 0.093rem;
+    }
+
+    &.ajaxbar-default{
+        background-color: #000;
+    }
+
+}

@@ -1,0 +1,176 @@
+<template>
+  <e-layout title="input">
+    <stu-header>
+      <p class="font20">input</p>
+    </stu-header>
+    <e-content>
+      <div class="login-input-wrap">
+        <e-input
+          ref="myInput"
+          v-model="text"
+          :minlength="4"
+          :maxlength="4"
+          class="login-input"
+          validate
+          tip
+          required
+          type="number"
+          placeholder="请输入验证码">
+          <div class="yzm text-blue font14 ml20">
+            获取验证码
+          </div>
+        </e-input>
+      </div>
+      <div class="bdb1px bd-solid bd-e0"/>
+      <div class="plr20">
+        <div class="form-input-wrap">
+          <e-input
+            ref="myInput"
+            :disabled="false"
+            v-model="text"
+            :minlength="4"
+            :maxlength="4"
+            class="form-input"
+            placeholder="请输入验证码"
+            validate
+            required
+            type="text">
+            <e-button
+              :height="60"
+              :width="200"
+              class="yzm"
+              plain
+              type="cir"
+              theme="primary">
+              获取验证码
+            </e-button>
+          </e-input>
+        </div>
+      </div>
+      <div class="bdb1px bd-solid bd-e0"/>
+      <div class="plr20">
+        <e-input
+          ref="myInput"
+          :disabled="false"
+          v-model="telNumber"
+          style="height:1.333rem;"
+          label="联系方式"
+          validate
+          tip
+          required
+          type="tel"
+          placeholder="请输入手机号"
+          @blurHandle="blur"/>
+      </div>
+      <div class="bdb1px bd-solid bd-e0"/>
+      <div class="plr20">
+        <e-input
+          ref="myInput"
+          :disabled="false"
+          v-model="password"
+          style="height:1.333rem;"
+          label="密码"
+          validate
+          tip
+          required
+          type="password"
+          placeholder="请输入密码"/>
+      </div>
+      <div class="bdb1px bd-solid bd-e0"/>
+      <div class="plr20">
+        <e-input
+          ref="myInput"
+          :disabled="false"
+          v-model="text"
+          style="height:1.333rem;"
+          autocomplete="off"
+          spellcheck
+          validate
+          required
+          clear-hide>
+          <p slot="label">
+            <e-icon
+              :size="24"
+              type="face-smile"
+              color="blue"/>
+          </p>
+          位
+        </e-input>
+      </div>
+      <div class="plr20">
+        <e-input
+          ref="myInput"
+          :disabled="false"
+          v-model="text"
+          style="height:1.0rem;"
+          align="right"
+          label="选择多少"
+          autocomplete="off"
+          spellcheck
+          validate
+          required
+          hide-clear
+          clear-hide>
+          位
+        </e-input>
+      </div>
+      <e-separator/>
+      <div class="font14 ptb30">
+        <param-table :list="inputInfo">
+          <template slot="title">组件html tag：e-input</template>
+        </param-table>
+      </div>
+    </e-content>
+  </e-layout>
+</template>
+<script type="text/javascript">
+import { eInput } from "@/components";
+import mergeProps from "@/../example/lib/mergeProps";
+export default {
+    data() {
+        return {
+            telNumber: "1392",
+            number: "",
+            email: "1234",
+            text: "",
+            password: "",
+            inputInfo: mergeProps(eInput)
+        };
+    },
+    methods: {
+        blur(errors, firstError) {
+            console.log(firstError);
+        }
+    }
+};
+
+</script>
+<style lang="scss">
+.login-input-wrap {
+    border-radius: 999px;
+    background-color: #e5f7ff;
+    height: 1.333rem;
+    width: 8.667rem;
+    padding: 0.133rem 0.533rem;
+    box-sizing: border-box;
+    display: flex;
+    margin: 0.267rem auto;
+    .login-input {
+        flex: 1;
+    }
+    .yzm {
+        line-height: 1.067rem;
+    }
+}
+
+.form-input-wrap {
+    display: flex;
+    height: 1.333rem;
+    align-items: center;
+    .form-input {
+        flex: 1;
+    }
+    .yzm {}
+}
+
+</style>
