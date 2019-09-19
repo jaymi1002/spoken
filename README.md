@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # ekwing
 
 > ekwing plugins ekUi
@@ -28,3 +29,7 @@ npm test
 ```
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+=======
+# spoken
+h5口语
+>>>>>>> 41d52bc68c3dcd9b78d6703df3a625e1936a2718
