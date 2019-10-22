@@ -1,120 +1,115 @@
+<!--
+ * @Description:
+ * @Autor: lifangfang
+ * @Date: 2019-10-22 10:27:00
+ * @LastEditors: lifangfang
+ * @LastEditTime: 2019-10-22 18:30:33
+ -->
 <template>
-  <e-layout>
-    <stu-header
-      fixed
-      title="ek 基础组件"/>
-    <e-content>
-      <p class="font18 lh3 tc bold">UI组件</p>
-      <e-grid
-        :cols="3"
-        show-vertical-dividers>
-        <e-grid-item
-          v-for="el in UI"
-          @click="go(el);" :key="el">
-          <template>
-            <img
-              slot="icon"
-              src="https://cn.vuejs.org/images/logo.png" >
-          </template>
-          <template slot="label">{{ el }}</template>
-        </e-grid-item>
-      </e-grid>
-      <p class="font18 lh3 tc bold">表单</p>
-      <e-grid
-        :cols="3"
-        show-vertical-dividers>
-        <e-grid-item
-          v-for="el in form"
-          @click="go(el);" :key="el">
-          <template>
-            <img
-              slot="icon"
-              src="https://cn.vuejs.org/images/logo.png" >
-          </template>
-          <template slot="label">{{ el }}</template>
-        </e-grid-item>
-      </e-grid>
-      <p class="font18 lh3 tc bold">选择</p>
-      <e-grid
-        :cols="3"
-        show-vertical-dividers>
-        <e-grid-item
-          v-for="el in check"
-          @click="go(el);" :key="el">
-          <template>
-            <img
-              slot="icon"
-              src="https://cn.vuejs.org/images/logo.png" >
-          </template>
-          <template slot="label">{{ el }}</template>
-        </e-grid-item>
-      </e-grid>
-      <p class="font18 lh3 tc bold">弹出层</p>
-      <e-grid
-        :cols="3"
-        show-vertical-dividers>
-        <e-grid-item
-          v-for="el in popup"
-          @click="go(el);" :key="el">
-          <template>
-            <img
-              slot="icon"
-              src="https://cn.vuejs.org/images/logo.png" >
-          </template>
-          <template slot="label">{{ el }}</template>
-        </e-grid-item>
-      </e-grid>
-      <p class="font18 lh3 tc bold">滚动</p>
-      <e-grid
-        :cols="3"
-        show-vertical-dividers>
-        <e-grid-item
-          v-for="el in scroll"
-          @click="go(el);" :key="el">
-          <template>
-            <img
-              slot="icon"
-              src="https://cn.vuejs.org/images/logo.png" >
-          </template>
-          <template slot="label">{{ el }}</template>
-        </e-grid-item>
-      </e-grid>
-      <p class="font18 lh3 tc bold">手势自定义指令</p>
-      <e-grid
-        :cols="3"
-        show-vertical-dividers>
-        <e-grid-item
-          v-for="el in directives"
-          @click="go(el);" :key="el">
-          <template>
-            <img
-              slot="icon"
-              src="https://cn.vuejs.org/images/logo.png" >
-          </template>
-          <template slot="label">{{ el }}</template>
-        </e-grid-item>
-      </e-grid>
-    </e-content>
-  </e-layout>
+    <div>
+        <a href="javascript:;" @click="record">record</a>
+        <br />
+        <a href="javascript:;" @click="stop">stop</a>
+        <br />
+        <a href="javascript:;" @click="playLocal">playLocal</a>
+        <br />
+        <a href="javascript:;" @click="stopPlayLocal">stopplaylocal</a>
+        <br />
+        <a href="javascript:;" @click="playAudio">playAudio</a>
+        <br />
+        <a href="javascript:;" @click="pauseAudio">pauseAudio</a>
+        <br />
+    </div>
 </template>
-<script type="text/javascript">
+<script>
+import { SpeechData, SDK } from "@/plugins/sdk";
+import AudioPlayer from "@/plugins/AudioPlayer";
+
 export default {
-    data() {
-        return {
-            UI: ["accordion", "ajaxbar", "badge", "buttonWrap", "card", "flex", "grid", "icon", "img", "layout", "list", "progress", "separator"],
-            popup: ["actionsheet", "activePop", "dialog", "modal", "toast"],
-            form: ["button", "calendar", "counter", "datetime", "input", "range", "switch", "textarea"],
-            scroll: ["scroll", "scrollPop", "scrollPage"],
-            check: ["checkIcon", "checker", "checkList", "checkLevels"],
-            // demoList:['accordion','actionsheet','ajaxbar','badge','button','buttonWrap','calendar','card','check','counter','datetime','grid','icon','img','input','layout','list','modal','progress','range','separator','scroll','scrollPop','scrollPage','switch','directives','textarea','test'],
-            directives: ["directives"]
-        };
+    created() {
+        let speechData = new SpeechData([
+            {
+                text: "hello",
+                duration: 2000
+            }
+        ]);
+        this.recorder = SDK(
+            "xs",
+            {
+                coreType: "word",
+                data: speechData,
+                hookEvents: {
+                    onReady() {
+                        console.log("ready");
+                    },
+                    onStart() {
+                        console.log("start");
+                    },
+                    onProgress(duration) {
+                        console.log(duration);
+                    },
+                    onStop() {
+                        console.log("stop");
+                    },
+                    onResult(result) {
+                        console.log(result);
+                    },
+                    onError(err) {
+                        console.log(err);
+                    },
+                    onPlayLocal() {
+                        console.log("playlocal");
+                    },
+                    onStopPlayLocal() {
+                        console.log("stopplaylocal");
+                    }
+                }
+            },
+            true
+        );
+        this.audio = new AudioPlayer({
+            src:
+                "https://cdn-resource.ekwing.com/acpf/data/upload/tk/2015/08/05/55c1b3146e0f5.mp3",
+            intStartMs: 49000,
+            // intEndMs: 5000,
+            hookEvents: {
+                onPlay() {
+                    console.log("play");
+                },
+                onPause() {
+                    console.log("pause");
+                },
+                onEnd() {
+                    console.log("end");
+                },
+                onProgress({ currentTime, duration }) {
+                    console.log(currentTime, duration);
+                },
+                onError(err) {
+                    console.log(err);
+                }
+            }
+        });
     },
     methods: {
-        go(str) {
-            window.location.href = `/#/${str}`;
+        record() {
+            this.recorder.record();
+        },
+        stop() {
+            this.recorder.stop();
+        },
+        playLocal() {
+            this.recorder.playLocal();
+        },
+        stopPlayLocal() {
+            this.recorder.stopPlayLocal();
+        },
+        playAudio() {
+            this.audio.play();
+        },
+        pauseAudio() {
+            this.audio.pause();
         }
     }
 };
-
 </script>
