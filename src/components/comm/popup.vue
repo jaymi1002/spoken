@@ -3,7 +3,7 @@
  * @Autor: lifangfang
  * @Date: 2019-10-23 10:37:02
  * @LastEditors: lifangfang
- * @LastEditTime: 2019-10-23 14:18:27
+ * @LastEditTime: 2019-11-07 19:45:33
  -->
 <template>
     <div class="popup">
@@ -13,7 +13,7 @@
             enter-active-class="animated fadeIn"
             leave-active-class="animated fadeOut"
         >
-            <div ref="modalContent" class="popup-content" v-if="active">
+            <div ref="modalContent" id="spokenPopup" class="popup-content" v-if="active">
                 <slot></slot>
             </div>
         </transition>
@@ -32,12 +32,16 @@ export default {
             active: false
         };
     },
+    destroyed() {
+        console.log("destroyed");
+    },
     methods: {
         show() {
             this.active = true;
         },
         hide() {
             this.active = false;
+            this.$el.remove();
         },
         enterCancelled() {
             this.$el.remove();
@@ -53,8 +57,10 @@ export default {
             if (newVal) {
                 document.body.classList.add("popup-modal");
                 document.body.appendChild(this.$el);
+                this.$emit("onShow");
             } else {
                 document.body.classList.remove("popup-modal");
+                this.$emit("onHide");
             }
         }
     }
@@ -62,20 +68,16 @@ export default {
 </script>
 <style lang="scss">
 .popup {
-    position: fixed;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
     .popup-content {
         width: 900px;
         height: 600px;
-        position: absolute;
+        position: fixed;
         top: 50%;
         left: 50%;
         margin-left: -450px;
         margin-top: -300px;
         z-index: 3;
+        overflow: hidden;
     }
     .popup-mask {
         background-color: rgba(0, 0, 0, 0.4);

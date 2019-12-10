@@ -3,18 +3,18 @@
  * @Autor: lifangfang
  * @Date: 2019-10-22 17:48:12
  * @LastEditors: lifangfang
- * @LastEditTime: 2019-10-22 18:56:06
+ * @LastEditTime: 2019-11-07 19:37:55
  */
 class AudioPlayer {
-    constructor({ src, intStartMs, intEndMs, hookEvents } = {}) {
+    constructor({ src, hookEvents } = {}) {
         if (!src) {
             throw new Error('src must be string');
         }
         this.objAudio = new Audio(src);
         this.objAudio.preload = 'preload';
-        this.intStartMs = intStartMs || 0;
-        this.intEndMs = intEndMs;
-        this.hookEvents = hookEvents;
+        this.intStartMs = 0;
+        this.intEndMs = 0;
+        this.hookEvents = hookEvents || {};
         this._bindEvents();
     }
     setSrc(src) {
@@ -25,16 +25,23 @@ class AudioPlayer {
         return this.objAudio.src;
     }
 
-    play(intCurtMs) {
-        if (!intCurtMs) {
-            intCurtMs = this.intStartMs;
+    play({ intStartMs, intEndMs } = {}) {
+        if (intStartMs) {
+            this.intStartMs = intStartMs;
+        } else {
+            this.intStartMs = 0;
         }
 
+        if (intEndMs) {
+            this.intEndMs = intEndMs;
+        } else {
+            this.intEndMs = 0;
+        }
         var errorName = "";
 
         //检测是否是IE11设置时间导致error   原因: 必须等到音频加载完毕之后才可以设置时间
         try {
-            this.objAudio.currentTime = intCurtMs;
+            this.objAudio.currentTime = this.intStartMs;
         } catch (e) {
             var errorType = "InvalidStateError".toLocaleLowerCase();
             if ("name" in e) {
@@ -45,14 +52,14 @@ class AudioPlayer {
 
             if (errorName.toLocaleLowerCase() === errorType) {
                 this.objAudio.addEventListener("loadedmetadata", () => {
-                    this.objAudio.currentTime = parseFloat(intCurtMs / 1000);
+                    this.objAudio.currentTime = parseFloat(this.intStartMs / 1000);
                     this.objAudio.play();
                 });
             }
         }
         //非IE
         if (errorName === "") {
-            this.objAudio.currentTime = parseFloat(intCurtMs / 1000);
+            this.objAudio.currentTime = parseFloat(this.intStartMs / 1000);
             this.objAudio.play();
         }
     }
@@ -85,6 +92,7 @@ class AudioPlayer {
                 this.hookEvents.onPlay();
             }
         });
+
         this.objAudio.addEventListener('pause', () => {
             if (this.intEndMs && this.objAudio.currentTime * 1000 >= this.intEndMs) {
                 if ('onEnd' in this.hookEvents) {
@@ -110,10 +118,20 @@ class AudioPlayer {
             if (this.intEndMs && this.getCurrentTime() * 1000 >= this.intEndMs) {
                 this.pause();
             } else {
+                let duration = 0;
+                if (this.intStartMs && this.intEndMs) {
+                    duration = this.intEndMs - this.intStartMs;
+                } else if (this.intStartMs) {
+                    duration = this.getDuration() * 1000 - this.intStartMs;
+                } else if (this.intEndMs) {
+                    duration = this.intEndMs;
+                } else {
+                    duration = this.getDuration() * 1000;
+                }
                 if ('onProgress' in this.hookEvents) {
                     this.hookEvents.onProgress({
-                        currentTime: this.getCurrentTime() * 1000,
-                        duration: this.getDuration() * 1000
+                        currentTime: this.intStartMs ? (this.getCurrentTime() * 1000 - this.intStartMs) : this.getCurrentTime() * 1000,
+                        duration: duration
                     });
                 }
             }

@@ -1,0 +1,27 @@
+.vip-cnametag-exp,
+.vip-cnametag-false,
+.vip-cnametag-school,
+.vip-cnametag-vip {
+    display: inline-block;
+    width: 132px;
+    height: 33px;
+    background: url(../images/vip_cname_tag.png) no-repeat;
+    vertical-align: text-bottom;
+    white-space: nowrap;
+}
+
+.vip-cnametag-vip {
+    background-position: 0 0
+}
+
+.vip-cnametag-exp {
+    background-position: 0 -108px
+}
+
+.vip-cnametag-school {
+    background-position: 0 -162px
+}
+
+.vip-cnametag-false {
+    background-position: 0 -54px
+}

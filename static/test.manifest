@@ -1,0 +1,9 @@
+CACHE MANIFEST
+    #v0.11
+    CACHE:
+    /app.js
+    /static/preload.min.js
+    /static/engine_xs_sdk.js
+    /static/engine_yzs_sdk.js
+    FALLBACK:
+    /offline.html

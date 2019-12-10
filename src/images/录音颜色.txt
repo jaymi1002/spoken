@@ -1,0 +1,13 @@
+·		public static const ROLE_NAME_NO_READ:int=0xCCCCCC;
+		public static const ROLE_NAME_IS_READING:int=0x666666;
+		public static const WORD_NO_READ:int=0x999999;
+		public static const WORD_IS_READING:int=0x333333;
+		
+		/**读的很好的颜色**/
+		public static const READ_GOOD:int=0x03C940;
+		/**读的一般的颜色**/
+		public static const READ_NOAMAL:int=0xFD9706;
+		/**读的很差的颜色**/
+		public static const READ_BAD:int=0xFF5656;
+		/**非vip颜色**/
+		public static const READ_NO_VIP:int=0x08A8F1;

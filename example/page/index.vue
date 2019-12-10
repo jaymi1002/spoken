@@ -3,113 +3,106 @@
  * @Autor: lifangfang
  * @Date: 2019-10-22 10:27:00
  * @LastEditors: lifangfang
- * @LastEditTime: 2019-10-22 18:30:33
+ * @LastEditTime: 2019-11-07 16:55:30
  -->
 <template>
-    <div>
-        <a href="javascript:;" @click="record">record</a>
-        <br />
-        <a href="javascript:;" @click="stop">stop</a>
-        <br />
-        <a href="javascript:;" @click="playLocal">playLocal</a>
-        <br />
-        <a href="javascript:;" @click="stopPlayLocal">stopplaylocal</a>
-        <br />
-        <a href="javascript:;" @click="playAudio">playAudio</a>
-        <br />
-        <a href="javascript:;" @click="pauseAudio">pauseAudio</a>
-        <br />
+    <div class="index-demo">
+        <p>
+            <a href="javascript:;" @click="showWords">读记词语</a>
+        </p>
+        <p>
+            <a href="javascript:;" @click="showImitate">仿示例读句子</a>
+        </p>
+		 <spoken-words :engeen="engeen" :biz="biz"  v-if="vueType===SPOKENWORDS" ref="spokenWords" :data="data" @onHide="biz=''"></spoken-words>
+        <imitate-simple
+            v-if="showImitateStatus"
+            ref="imitateSimple"
+            :data="dataImitate"
+            @onHide="onHide"
+        ></imitate-simple>
     </div>
 </template>
 <script>
-import { SpeechData, SDK } from "@/plugins/sdk";
-import AudioPlayer from "@/plugins/AudioPlayer";
 
+// import { SpeechData, SDK } from "@/plugins/sdk";
+
+// import AudioPlayer from "@/plugins/AudioPlayer";
+import spokenPopBox from "@";
+// import wordsData from "../data";
+import spokenWords from "@/components/spokenWords.vue";
+import imitateSimple from "@/components/imitateSimple.vue";
+import spokenWordsBasic from "@/json/spokeWordsBasic.json";
+import question from "@/plugins/question";
+import {SPOKENWORDS} from "@/confs/quesType";
+import bizObj from "@/confs/bizConf";
 export default {
-    created() {
-        let speechData = new SpeechData([
-            {
-                text: "hello",
-                duration: 2000
-            }
-        ]);
-        this.recorder = SDK(
-            "xs",
-            {
-                coreType: "word",
-                data: speechData,
-                hookEvents: {
-                    onReady() {
-                        console.log("ready");
-                    },
-                    onStart() {
-                        console.log("start");
-                    },
-                    onProgress(duration) {
-                        console.log(duration);
-                    },
-                    onStop() {
-                        console.log("stop");
-                    },
-                    onResult(result) {
-                        console.log(result);
-                    },
-                    onError(err) {
-                        console.log(err);
-                    },
-                    onPlayLocal() {
-                        console.log("playlocal");
-                    },
-                    onStopPlayLocal() {
-                        console.log("stopplaylocal");
-                    }
-                }
+    data() {
+        return {
+            dataWords: {
+                keys: "005_1067219|1067222_1950",
+                userId: "guest",
+                vip_type: "isVip"
             },
-            true
-        );
-        this.audio = new AudioPlayer({
-            src:
-                "https://cdn-resource.ekwing.com/acpf/data/upload/tk/2015/08/05/55c1b3146e0f5.mp3",
-            intStartMs: 49000,
-            // intEndMs: 5000,
-            hookEvents: {
-                onPlay() {
-                    console.log("play");
-                },
-                onPause() {
-                    console.log("pause");
-                },
-                onEnd() {
-                    console.log("end");
-                },
-                onProgress({ currentTime, duration }) {
-                    console.log(currentTime, duration);
-                },
-                onError(err) {
-                    console.log(err);
-                }
+            dataImitate: {
+                keys: "009_1304235_1952",
+                userId: "guest",
+                vip_type: "isVip"
+            },
+            showImitateStatus: false,
+		    data: {},
+            SPOKENWORDS,
+            biz: "",
+            engeen: "yzs"
+        };
+    },
+    mounted() {},
+    components: {
+        spokenWords,
+        imitateSimple
+    },
+    created() {},
+    computed: {
+        vueType() {
+            if (!this.biz) {
+                return "";
             }
-        });
+            return bizObj[this.biz].vue;
+        }
     },
     methods: {
-        record() {
-            this.recorder.record();
+        showWords() {
+            this.data = spokenWordsBasic;
+            this.biz = "005";
+            this.$nextTick(() => {
+                this.$refs.spokenWords.show();
+            });
         },
-        stop() {
-            this.recorder.stop();
+        showImitate() {
+            this.showImitateStatus = true;
+            this.$nextTick(() => {
+                this.$refs.imitateSimple.show();
+            });
         },
-        playLocal() {
-            this.recorder.playLocal();
-        },
-        stopPlayLocal() {
-            this.recorder.stopPlayLocal();
-        },
-        playAudio() {
-            this.audio.play();
-        },
-        pauseAudio() {
-            this.audio.pause();
+        onHide() {
+            this.showImitateStatus = false;
         }
     }
 };
 </script>
+<style lang="scss">
+@import "@/style/variables.scss";
+.index-demo {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    & > p {
+        font-size: 16px;
+        margin: 10px 0;
+        a {
+            color: $primaryBlue;
+        }
+    }
+}
+</style>

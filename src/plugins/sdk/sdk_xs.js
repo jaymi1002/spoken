@@ -3,7 +3,7 @@
  * @Autor: lifangfang
  * @Date: 2019-10-22 10:37:59
  * @LastEditors: lifangfang
- * @LastEditTime: 2019-10-22 18:59:42
+ * @LastEditTime: 2019-11-06 19:48:12
  */
 import SpeechData from './speechdata';
 import errorXsMap from './error_xs';
@@ -85,18 +85,19 @@ class XS {
                 }
             },
             // engineBackResultFail: () => {},
-            playAudioComplete: function() {
+            playAudioComplete: function () {
                 if ('onStopPlayLocal' in _this._hookEvents) {
                     _this._hookEvents.onStopPlayLocal();
                 }
             },
-            playAudioError: function() {
+            playAudioError: function () {
                 if ('onStopPlayLocal' in _this._hookEvents) {
                     _this._hookEvents.onStopPlayLocal();
                 }
             },
             // noNetwork: () => {},
             logAccept: (log) => {
+                // console.log(log);
                 let logObj = JSON.parse(log);
                 if (JSON.parse(log).type === 'error' || errorXsMap[logObj.code]) {
                     _this._throwError(logObj.code);
@@ -120,16 +121,19 @@ class XS {
         }
         let { rateScale, symbol, attachAudioUrl } = this._conf,
             data = this.dataReader.current(),
-            refText = data.text;
+            refText = data.text,
+            coreType = data.coreType ? coreTypeMap[data.coreType] : this._coreType;
         this.recorder.startRecord({
-            coreType: this._coreType,
+            coreType,
             refText,
             rateScale,
             symbol,
-            attachAudioUrl
+            attachAudioUrl,
+            evalTime: null
             // evalTime: parseInt(data.duration)
         });
         let time = 0;
+        console.log('ll');
         this._timeIntevalId = setInterval(() => {
             time += 100;
             if ('onProgress' in this._hookEvents) {
@@ -146,8 +150,8 @@ class XS {
     }
 
     stop() {
-        clearTimeout(this._timeoutId);
         clearInterval(this._timeIntevalId);
+        clearTimeout(this._timeoutId);
         this.recorder.stopRecord();
         if ('onStop' in this._hookEvents) {
             this._hookEvents.onStop();
@@ -166,6 +170,12 @@ class XS {
         this.recorder.stopAudio();
         if ('onStopPlayLocal' in this._hookEvents) {
             this._hookEvents.onStopPlayLocal();
+        }
+    }
+
+    changeDataReader(data) {
+        if (data instanceof SpeechData) {
+            this.dataReader = data;
         }
     }
 }

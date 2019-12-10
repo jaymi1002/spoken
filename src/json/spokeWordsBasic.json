@@ -1,0 +1,72 @@
+{
+	"as_data": {
+		"ids": "57719,57720,57721,57722,57723",
+		"is_vip": true,
+		"vip_icon": 1,
+		"vip_day": "365",
+		"help_url": "https://www.ekwing.com/helpcode",
+		"number": "2",
+		"as_boot": 1,
+		"https_arr": ["wss://cloud.chivox.com:444"],
+		"https_AsStaticUrl": "https://cdn-res.ekwing.com/as/staticResource/",
+		"hid": 186592,
+		"hwcid": "903601",
+		"score_level": 1.5
+	},
+	"is_try": false,
+	"url": {
+		"log_data": {
+			"as_url": "http://www.ekwing.com/college/log",
+			"data": {
+				"flv_sid": "",
+				"token": "0.04375120611518812457719|57720|57721|57722|57723|57724|577251574672935000",
+				"source": "WordListenAndRead.swf",
+				"ip": "",
+				"param_term": "20190901"
+			}
+		},
+		"get_data": {
+			"as_url": "https://www.ekwing.com/proxy",
+			"data": {
+				"url": "https://acpf.ekwing.com/wapi/getbaseworktimucontent",
+				"method": "POST",
+				"data": {
+					"keys": "005_1077973_11772",
+					"param_term": "20190901"
+				}
+			}
+		},
+		"post_data": {
+			"as_url": "https://www.ekwing.com/hw/doitem",
+			"data": {
+				"key": "005_1077973_11772",
+				"biz": "005",
+				"param_term_outspace": "20190901"
+			}
+		},
+		"set_record": {
+			"as_url": "https://www.ekwing.com/record/set",
+			"data": {
+				"biz": "AS_HOMEWORK",
+				"key": "39f6f83bf0586e3a38a52dd6cb5ef733",
+				"param_term": "20190901"
+			}
+		},
+		"get_record": {
+			"as_url": "https://www.ekwing.com/record/get",
+			"data": {
+				"biz": "AS_HOMEWORK",
+				"key": "39f6f83bf0586e3a38a52dd6cb5ef733",
+				"param_term": "20190901"
+			}
+		},
+		"can_do": {
+			"as_url": "https://www.ekwing.com/Hw/cando",
+			"data": {
+				"hid": 186592,
+				"hwcid": "903601",
+				"param_term": "20190901"
+			}
+		}
+	}
+}

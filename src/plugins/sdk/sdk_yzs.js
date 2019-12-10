@@ -3,7 +3,7 @@
  * @Autor: lifangfang
  * @Date: 2019-10-22 10:37:49
  * @LastEditors: lifangfang
- * @LastEditTime: 2019-10-22 17:13:55
+ * @LastEditTime: 2019-11-05 11:19:50
  */
 import SpeechData from './speechdata.js';
 import SpeechError from './speecherror.js';
@@ -79,13 +79,19 @@ class YZS {
         };
 
         recorder.onStart = function() {
-            let time = 0;
+            let time = 0,
+                data = _this.dataReader.current();
+            _this._timeoutId = setTimeout(() => {
+                _this.stop();
+            }, data.duration);
+
             _this._timeIntevalId = setInterval(() => {
                 time += 100;
                 if ('onProgress' in _this._hookEvents) {
                     _this._hookEvents.onProgress(time);
                 }
             }, 100);
+
             if ('onStart' in _this._hookEvents) {
                 _this._hookEvents.onStart();
             }
@@ -100,6 +106,7 @@ class YZS {
 
         recorder.onResult = function(result) {
             result.audio = recorder.getSoundUrl();
+            result._from = "yzs";
             if ('onResult' in _this._hookEvents) {
                 _this._hookEvents.onResult(result);
             }
@@ -124,17 +131,17 @@ class YZS {
         };
     }
 
-    record() {
+    record(index) {
+        if (index !== undefined) {
+            this.dataReader.offset(index);
+        }
         let data = this.dataReader.current(),
-            mode = data.mode ? data.mode : this._conf.mode;
+            mode = coreModeMaps[data.coreType] ? coreModeMaps[data.coreType] : this._conf.mode;
         this.recorder.start(data.text, mode, 'en');
-        this._timeoutId = setTimeout(() => {
-            this.stop();
-        }, data.duration);
     }
 
     stop() {
-        clearTimeout(this._timerId);
+        clearTimeout(this._timeoutId);
         this.recorder.stop();
     }
 
@@ -144,6 +151,12 @@ class YZS {
 
     stopPlayLocal() {
         this.recorder.stopPlayLocal();
+    }
+
+    changeDataReader(data) {
+        if (data instanceof SpeechData) {
+            this.dataReader = data;
+        }
     }
 }
 

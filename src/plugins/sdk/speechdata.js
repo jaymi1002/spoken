@@ -3,7 +3,7 @@
  * @Autor: lifangfang
  * @Date: 2018-12-04 14:13:48
  * @LastEditors: lifangfang
- * @LastEditTime: 2019-10-22 11:57:28
+ * @LastEditTime: 2019-10-31 10:17:38
  */
 import Dtype from './vartype.js';
 
@@ -31,7 +31,9 @@ class SpeechData {
         if (this.idx === -1) {
             this.idx++;
         }
-
+        if (!this.data[this.idx].duration) {
+            this.data[this.idx].duration = 2000;
+        }
         return this.data[this.idx];
     }
 

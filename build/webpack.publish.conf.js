@@ -11,8 +11,8 @@ const webpack = require('webpack')
 const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
-// const CopyWebpackPlugin = require('copy-webpack-plugin')
-// const HtmlWebpackPlugin = require('html-webpack-plugin')
+    // const CopyWebpackPlugin = require('copy-webpack-plugin')
+    // const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
@@ -44,7 +44,7 @@ baseWebpackConfig.module.rules = [{
 ]
 var webpackConfig = merge(baseWebpackConfig, {
     entry: {
-        ekwing: './src/index.js'
+        spoken: './src/index.js'
     },
     module: {
         rules: utils.styleLoaders({
@@ -56,9 +56,9 @@ var webpackConfig = merge(baseWebpackConfig, {
     devtool: config.publish.productionSourceMap ? "#source-map" : false,
     output: {
         path: config.publish.distRoot,
-        filename: 'index.js',
+        filename: 'spoken.js',
         publicPath: config.publish.assetsPublicPath,
-        library: 'ekwing',
+        library: 'spoken',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
@@ -91,7 +91,7 @@ var webpackConfig = merge(baseWebpackConfig, {
             'process.env': config.publish.env
         }),
         new ExtractTextPlugin({
-            filename: utils.assetsPath('index.css'),
+            filename: utils.assetsPath('spoken.css'),
             // Setting the following option to `false` will not extract CSS from codesplit chunks.
             // Their CSS will instead be inserted dynamically with style-loader when the codesplit chunk has been loaded by webpack.
             // It's currently set to `true` because we are seeing that sourcemaps are included in the codesplit bundle as well when it's `false`, 

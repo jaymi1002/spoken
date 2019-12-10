@@ -117,7 +117,7 @@ module.exports = {
         // false 使用保留字做属性名时, 只能使用[]方式取属性 e.g [2, {"allowKeywords": false}]
         // allowPattern: 当属性名匹配提供的正则表达式时，允许使用[]方式取值,否则只能用.号取值 e.g [2, {"allowPattern": "^[a-z]+(_[a-z]+)+$"}]
         "dot-notation": [2, {
-            "allowKeywords": false
+            "allowKeywords": true
         }],
         // 使用 === 替代 == allow-null允许null和undefined==
         "eqeqeq": [2, "allow-null"],
@@ -303,7 +303,7 @@ module.exports = {
             "allowSingleLine": true
         }],
         // 双峰驼命名格式
-        "camelcase": 2,
+        "camelcase": 0,
         // 控制逗号前后的空格
         "comma-spacing": [2, {
             "before": false,
@@ -318,7 +318,7 @@ module.exports = {
         // 用于指统一在回调函数中指向this的变量名，箭头函数中的this已经可以指向外层调用者，应该没卵用了
         // e.g [0,"that"] 指定只能 var that = this. that不能指向其他任何值，this也不能赋值给that以外的其他值
         // "consistent-this": [1, "that"],
-        "consistent-this":0,
+        "consistent-this": 0,
         // 强制使用命名的 function 表达式
         "func-names": 0,
         // 文件末尾强制换行
@@ -471,7 +471,7 @@ module.exports = {
         // "spaced-comment": [2, "always", {
         //     "markers": ["global", "globals", "eslint", "eslint-disable", "*package", "!"]
         // }],
-        "spaced-comment":0,
+        "spaced-comment": 0,
         // 要求或禁止 Unicode BOM
         "unicode-bom": 0,
         // 要求正则表达式被括号括起来
@@ -546,13 +546,13 @@ module.exports = {
 
         //stardard
 
-        "standard/no-callback-literal":0,
+        "standard/no-callback-literal": 0,
 
         //////////////
         // vue相关  //
         //////////////
-        "vue/no-side-effects-in-computed-properties":0,
-        "vue/valid-v-for":0,
-        "vue/require-v-for-key" :0,
+        "vue/no-side-effects-in-computed-properties": 0,
+        "vue/valid-v-for": 0,
+        "vue/require-v-for-key": 0,
     }
 }

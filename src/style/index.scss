@@ -1,0 +1,47 @@
+@import 'variables.scss';
+@import 'vip.scss';
+@import 'animate.css';
+.color-good{
+    color:$scoreGood;
+}
+.color-bad{
+    color:$scoreBad;
+}
+.color-ordinary{
+    color:$scoreOrdinary;
+}
+.bg-good{
+    background-color:$scoreGood;
+}
+.bg-bad{
+    background-color:$scoreBad;
+}
+.bg-ordinary{
+    background-color:$scoreOrdinary;
+}
+body{
+    cursor: default;
+}
+.df{
+    display: flex;
+}
+.abs{
+    position: absolute;
+}
+.rel{
+    position: relative;
+}
+.hpt100{
+    height: 100%;
+}
+.wpt100{
+    width: 100%;
+}
+
+.align-center{
+    align-items: center;
+    // vertical-align: middle;
+}
+.vertical-middle{
+    justify-content: center;
+}

@@ -4,33 +4,23 @@
  * @Last Modified by:   lifangfang
  * @Last Modified time: 2019-08-22 18:34:43
  */
-// import * as components from "./components.js";
-// import * as directives from "./directives.js";
-// import "./style/base.scss";
-// export * from "./components";
+import Vue from 'vue';
+import axios from 'axios';
+import './style/index.scss';
+import './components.js';
+import './directives.js';
+import spokenWords from '@/components/spokenWords.vue';
+axios.defaults.baseURL = 'https://172.17.5.170:8080';
+axios.defaults.withCredentials = true;
+Vue.prototype.$axios = axios;
 
-// const ekwingCom = {
-//     ...components
-// };
+function spokenPopBox(data) {
+    let instance = new (Vue.extend(spokenWords))({
+        el: document.createElement('div')
+    });
+    instance.data = data;
+    instance.$mount();
+    instance.show();
+}
 
-// let MessageBox = components.MessageBox;
-// let ajaxBar = components.ajaxBar;
-// ekwingCom.install = function(Vue, options = {}) {
-//     for (let key in components) {
-//         if (components[key].name) {
-//             Vue.component(components[key].name, components[key]);
-//         }
-//     }
-//     Vue.prototype.$toast = MessageBox.toast;
-//     Vue.prototype.$alert = MessageBox.alert;
-//     Vue.prototype.$alertSimple = MessageBox.alertSimple;
-//     Vue.prototype.$confirm = MessageBox.confirm;
-//     Vue.prototype.$confirmSimple = MessageBox.confirmSimple;
-//     Vue.prototype.$ajaxBar = ajaxBar;
-//     for (let key in directives) {
-//     	if (directives[key].name) {
-//     		Vue.directive(directives[key].name, directives[key]);
-//     	}
-//     }
-// };
-// export default ekwingCom;
+export default spokenPopBox;

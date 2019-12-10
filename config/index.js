@@ -1,3 +1,10 @@
+/*
+ * @Description: 
+ * @Autor: lifangfang
+ * @Date: 2019-10-22 10:27:00
+ * @LastEditors: lifangfang
+ * @LastEditTime: 2019-11-05 19:07:52
+ */
 'use strict'
 // Template version: 1.3.1
 // see http://vuejs-templates.github.io/webpack for documentation.
@@ -10,8 +17,13 @@ module.exports = {
         // Paths
         assetsSubDirectory: 'static',
         assetsPublicPath: '/',
-        proxyTable: {},
-
+        proxyTable: {
+            '/proxy': {
+                target: 'https://www.ekwing.com/',
+                secure: false,
+                changeOrigin: true,
+            }
+        },
         // Various Dev Server settings
         host: '0.0.0.0', // can be overwritten by process.env.HOST
         port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
@@ -78,7 +90,7 @@ module.exports = {
         distRoot: path.resolve(__dirname, '../dist'),
         assetsSubDirectory: '',
         assetsPublicPath: '',
-        productionSourceMap:false,
+        productionSourceMap: false,
         cssSourceMap: false
     }
 }
